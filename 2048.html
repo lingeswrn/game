@@ -5,27 +5,30 @@
 <body>
 	<table width="30%" height="30%" border="2">
 		<tr align="center">
-			<td id="cell_1"></td>
-			<td id="cell_2"></td>
-			<td id="cell_3"></td>
+			<td><span class="cell_1"></span><input type="hidden" class="cell_1" /> </td>
+			<td><span class="cell_2"></span><input type="hidden" class="cell_2" /></td>
+			<td><span class="cell_3"></span><input type="hidden" class="cell_3" /></td>
 		</tr>
 		<tr align="center">
-			<td id="cell_4"></td>
-			<td id="cell_5"></td>
-			<td id="cell_6"></td>
+			<td><span class="cell_4"></span><input type="hidden" class="cell_4" /></td>
+			<td><span class="cell_5"></span><input type="hidden" class="cell_5" /></td>
+			<td><span class="cell_6"></span><input type="hidden" class="cell_6" /></td>
 		</tr>
 		<tr align="center">
-			<td id="cell_7"></td>
-			<td id="cell_8"></td>
-			<td id="cell_9"></td>
+			<td><span class="cell_7"></span><input type="hidden" class="cell_7" /></td>
+			<td><span class="cell_8"></span><input type="hidden" class="cell_8" /></td>
+			<td><span class="cell_9"></span><input type="hidden" class="cell_9" /></td>
 		</tr>
 	</table>	
 <script>
 	var val,val2;
 	getRandomNumber();
 	function getRandomNumber(){
-		val = Math.floor((Math.random() * 9) + 1);
-		val2 = Math.floor((Math.random() * 9) + 1);		
+		//val = Math.floor((Math.random() * 9) + 1);
+		//val2 = Math.floor((Math.random() * 9) + 1);		
+		
+		val = 1;
+		val2 = 3;		
 		writeInitialValue();
 	}
 	console.log(val);
@@ -34,21 +37,138 @@
 		if(val == val2)
 			getRandomNumber();
 		else{
-			document.getElementById('cell_'+val).innerHTML = 2;
-			document.getElementById('cell_'+val2).innerHTML = 2;
+			/*$('.cell_'+val).html('2');
+			$('.cell_'+val2).html('2');
+			
+			$('.cell_'+val).val('2');
+			$('.cell_'+val2).val('2');*/
+			
+			$('.cell_1').html('');
+			$('.cell_2').html('4');
+			$('.cell_3').html('4');
+			
+			$('.cell_1').val('');
+			$('.cell_2').val('4');
+			$('.cell_3').val('4');
 		}
 	}
 	$(document).keydown(function(e) {
 		if(e.which == 38) {
 			alert("up");
 		}else if(e.which == 39){
-			alert("right");
+			if($('.cell_3').val() || $('.cell_2').val() || $('.cell_1').val()){
+				if($('.cell_3').val() != '' && $('.cell_2').val() != '' && $('.cell_1').val() != ''){
+					alert();
+					if($('.cell_3').val() == $('.cell_2').val()){						
+						var val = parseInt($('.cell_3').val()) + parseInt($('.cell_2').val());						
+						$('.cell_3').html(val);
+						$('.cell_3').val(val);
+						
+						$('.cell_2').html($('.cell_1').val());
+						$('.cell_2').val($('.cell_1').val());
+						
+						$('.cell_1').html('')
+						$('.cell_1').val('')
+						
+					}else if($('.cell_2').val() == $('.cell_1').val()){						
+						var val2 = parseInt($('.cell_2').val()) + parseInt($('.cell_1').val());
+						//alert(val2);
+						$('.cell_2').html(val2);
+						$('.cell_2').val(val2);
+						
+						$('.cell_1').html('')
+						$('.cell_1').val('')
+					}
+				}else if($('.cell_3').val() == '' && ($('.cell_2').val() != '' && $('.cell_1').val() != '')){			
+					if($('.cell_1').val() == $('.cell_2').val()){						
+						var val = parseInt($('.cell_1').val()) + parseInt($('.cell_2').val());
+						//alert(val);
+						$('.cell_3').html(val);
+						$('.cell_3').val(val);
+						
+						$('.cell_1').html('');
+						$('.cell_1').val('');
+						
+						$('.cell_2').html('');
+						$('.cell_2').val('');
+						checkTableValues();
+					}else{			
+						$('.cell_3').html($('.cell_2').val());
+						$('.cell_2').html($('.cell_1').val());
+						
+						$('.cell_3').val($('.cell_2').val());
+						$('.cell_2').val($('.cell_1').val());
+						
+						$('.cell_1').html('');
+						$('.cell_1').val('');
+						checkTableValues();
+					}
+				}else if($('.cell_2').val() == '' && ($('.cell_3').val() != '' && $('.cell_1').val() != '')){			
+					if($('.cell_1').val() == $('.cell_3').val()){						
+						var val = parseInt($('.cell_1').val()) + parseInt($('.cell_3').val());
+						//alert(val);
+						$('.cell_3').html(val);
+						$('.cell_3').val(val);
+						
+						$('.cell_1').html('');
+						$('.cell_1').val('');
+						
+						$('.cell_2').html('');
+						$('.cell_2').val('');
+						checkTableValues();
+					}else{
+						$('.cell_2').html($('.cell_1').val());
+						$('.cell_1').html('');
+						
+						$('.cell_2').val($('.cell_1').val());
+						$('.cell_1').val('');
+						checkTableValues();
+					}
+				}else if($('.cell_1').val() == '' && ($('.cell_3').val() != '' && $('.cell_2').val() != '')){			
+					if($('.cell_2').val() == $('.cell_3').val()){						
+						var val = parseInt($('.cell_2').val()) + parseInt($('.cell_3').val());
+						//alert(val);
+						$('.cell_3').html(val);
+						$('.cell_3').val(val);
+						
+						$('.cell_1').html('');
+						$('.cell_1').val('');
+						
+						$('.cell_2').html('');
+						$('.cell_2').val('');
+						checkTableValues();
+					}else{						
+						checkTableValues();
+					}
+				}
+			}
+			/*if($('.cell_3').val() == ''){
+				if($('.cell_2').val() == ''){
+					if($('.cell_1').val() == ''){
+					
+					}
+				}
+			}*/
+			
 		}else if(e.which == 40){
 			alert("Down");
 		}else if(e.which == 37){
 			alert("Left");
 		}
 	});
+	
+	function checkTableValues(){
+		var emptyCell = [];
+		for(var t = 1; t <=9; t++){
+			if($('.cell_'+t).val() == ''){
+				emptyCell.push(t);
+			}
+		}
+		console.log(Math.floor(Math.random() * emptyCell.length));
+		var rand = emptyCell[Math.floor(Math.random() * emptyCell.length)];
+		$('.cell_'+rand).html('2');
+		$('.cell_'+rand).val('2');
+	}
 	
 	
 </script>
