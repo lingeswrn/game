@@ -1,162 +1,268 @@
 <html>
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<style>
+		td,table {
+			border: 1px solid #bbada0;
+			border-radius: 6px;
+			font-family: "Lucida Console", Times, serif;
+		/*	overflow: hidden;
+			width: 40px !important;
+			min-width: 40px;
+			padding: 11px;
+			height: 25px;*/
+		}
+		span{
+			font-size: 27px;
+			font-weight: 900;
+		}
+	</style>
 </head>
 <body>
-	<table width="30%" height="30%" border="2">
+	<table align="center">
 		<tr align="center">
-			<td><span class="cell_1"></span><input type="hidden" class="cell_1" /> </td>
-			<td><span class="cell_2"></span><input type="hidden" class="cell_2" /></td>
-			<td><span class="cell_3"></span><input type="hidden" class="cell_3" /></td>
+			<td width="100" height="100" ><span class="cell_1"></span><input type="hidden" class="cell_1" /> </td>
+			<td width="100" height="100"><span class="cell_2"></span><input type="hidden" class="cell_2" /></td>
+			<td width="100" height="100"><span class="cell_3"></span><input type="hidden" class="cell_3" /></td>
 		</tr>
 		<tr align="center">
-			<td><span class="cell_4"></span><input type="hidden" class="cell_4" /></td>
-			<td><span class="cell_5"></span><input type="hidden" class="cell_5" /></td>
-			<td><span class="cell_6"></span><input type="hidden" class="cell_6" /></td>
+			<td width="100" height="100"><span class="cell_4"></span><input type="hidden" class="cell_4" /></td>
+			<td width="100" height="100"><span class="cell_5"></span><input type="hidden" class="cell_5" /></td>
+			<td width="100" height="100"><span class="cell_6"></span><input type="hidden" class="cell_6" /></td>
 		</tr>
 		<tr align="center">
-			<td><span class="cell_7"></span><input type="hidden" class="cell_7" /></td>
-			<td><span class="cell_8"></span><input type="hidden" class="cell_8" /></td>
-			<td><span class="cell_9"></span><input type="hidden" class="cell_9" /></td>
+			<td width="100" height="100"><span class="cell_7"></span><input type="hidden" class="cell_7" /></td>
+			<td width="100" height="100"><span class="cell_8"></span><input type="hidden" class="cell_8" /></td>
+			<td width="100" height="100"><span class="cell_9"></span><input type="hidden" class="cell_9" /></td>
 		</tr>
 	</table>	
+	<!-- 
+	
+		Empty : rgba(238, 228, 218, 0.35)
+		two : #eee4da
+		four : #ede0c8
+		8 : bg- #f2b179, color - #f9f6f2
+		16 : bg- #f59563, color - #f9f6f2
+		32 : bg- #f67c5f, color - #f9f6f2
+		64 : bg- #f65e3b, color - #f9f6f2
+		128 : bg- #edcf72, color - #f9f6f2
+		256 : bg- #edcc61, color - #f9f6f2
+		 
+	-->
 <script>
 	var val,val2;
 	getRandomNumber();
 	function getRandomNumber(){
-		//val = Math.floor((Math.random() * 9) + 1);
-		//val2 = Math.floor((Math.random() * 9) + 1);		
-		
-		val = 1;
-		val2 = 3;		
+		val = Math.floor((Math.random() * 9) + 1);
+		val2 = Math.floor((Math.random() * 9) + 1);		
+			
 		writeInitialValue();
 	}
-	console.log(val);
-	console.log(val2);
 	function writeInitialValue(){
 		if(val == val2)
 			getRandomNumber();
 		else{
-			/*$('.cell_'+val).html('2');
+			$('.cell_'+val).html('2');
 			$('.cell_'+val2).html('2');
 			
 			$('.cell_'+val).val('2');
-			$('.cell_'+val2).val('2');*/
+			$('.cell_'+val2).val('2');
 			
-			$('.cell_1').html('');
-			$('.cell_2').html('4');
-			$('.cell_3').html('4');
+			/*$('.cell_9').html('2');
+			$('.cell_6').html('2');
+			$('.cell_3').html('2');
 			
-			$('.cell_1').val('');
-			$('.cell_2').val('4');
-			$('.cell_3').val('4');
+			$('.cell_9').val('2');
+			$('.cell_6').val('2');
+			$('.cell_3').val('2');*/
 		}
 	}
 	$(document).keydown(function(e) {
+	var up, right, down, left;
 		if(e.which == 38) {
-			alert("up");
-		}else if(e.which == 39){
-			if($('.cell_3').val() || $('.cell_2').val() || $('.cell_1').val()){
-				if($('.cell_3').val() != '' && $('.cell_2').val() != '' && $('.cell_1').val() != ''){
-					alert();
-					if($('.cell_3').val() == $('.cell_2').val()){						
-						var val = parseInt($('.cell_3').val()) + parseInt($('.cell_2').val());						
-						$('.cell_3').html(val);
-						$('.cell_3').val(val);
-						
-						$('.cell_2').html($('.cell_1').val());
-						$('.cell_2').val($('.cell_1').val());
-						
-						$('.cell_1').html('')
-						$('.cell_1').val('')
-						
-					}else if($('.cell_2').val() == $('.cell_1').val()){						
-						var val2 = parseInt($('.cell_2').val()) + parseInt($('.cell_1').val());
-						//alert(val2);
-						$('.cell_2').html(val2);
-						$('.cell_2').val(val2);
-						
-						$('.cell_1').html('')
-						$('.cell_1').val('')
-					}
-				}else if($('.cell_3').val() == '' && ($('.cell_2').val() != '' && $('.cell_1').val() != '')){			
-					if($('.cell_1').val() == $('.cell_2').val()){						
-						var val = parseInt($('.cell_1').val()) + parseInt($('.cell_2').val());
-						//alert(val);
-						$('.cell_3').html(val);
-						$('.cell_3').val(val);
-						
-						$('.cell_1').html('');
-						$('.cell_1').val('');
-						
-						$('.cell_2').html('');
-						$('.cell_2').val('');
-						checkTableValues();
-					}else{			
-						$('.cell_3').html($('.cell_2').val());
-						$('.cell_2').html($('.cell_1').val());
-						
-						$('.cell_3').val($('.cell_2').val());
-						$('.cell_2').val($('.cell_1').val());
-						
-						$('.cell_1').html('');
-						$('.cell_1').val('');
-						checkTableValues();
-					}
-				}else if($('.cell_2').val() == '' && ($('.cell_3').val() != '' && $('.cell_1').val() != '')){			
-					if($('.cell_1').val() == $('.cell_3').val()){						
-						var val = parseInt($('.cell_1').val()) + parseInt($('.cell_3').val());
-						//alert(val);
-						$('.cell_3').html(val);
-						$('.cell_3').val(val);
-						
-						$('.cell_1').html('');
-						$('.cell_1').val('');
-						
-						$('.cell_2').html('');
-						$('.cell_2').val('');
-						checkTableValues();
-					}else{
-						$('.cell_2').html($('.cell_1').val());
-						$('.cell_1').html('');
-						
-						$('.cell_2').val($('.cell_1').val());
-						$('.cell_1').val('');
-						checkTableValues();
-					}
-				}else if($('.cell_1').val() == '' && ($('.cell_3').val() != '' && $('.cell_2').val() != '')){			
-					if($('.cell_2').val() == $('.cell_3').val()){						
-						var val = parseInt($('.cell_2').val()) + parseInt($('.cell_3').val());
-						//alert(val);
-						$('.cell_3').html(val);
-						$('.cell_3').val(val);
-						
-						$('.cell_1').html('');
-						$('.cell_1').val('');
-						
-						$('.cell_2').html('');
-						$('.cell_2').val('');
-						checkTableValues();
-					}else{						
-						checkTableValues();
-					}
-				}
+			//UP
+			var up_1 = row(7,4,1);
+			var up_2 = row(8,5,2);
+			var up_3 = row(9,6,3);
+			if( up_1 == "entered" ||  up_2 == "entered" ||  up_3 == "entered" ){
+				up = 1;
+				checkTableValues()
 			}
-			/*if($('.cell_3').val() == ''){
-				if($('.cell_2').val() == ''){
-					if($('.cell_1').val() == ''){
-					
-					}
+			else{
+			alert("up");
+				up = 0;
+			}
+		}else if(e.which == 39){
+			//  RIGHT
+			right = 1;
+			var right_1 = row(1,2,3);
+			var right_2 = row(4,5,6);
+			var right_3 = row(7,8,9);			
+			if( right_1 == "entered" ||  right_2 == "entered" ||  right_3 == "entered" ){
+				right = 1;
+				checkTableValues();
+			}else{
+			alert("right");
+				right = 0;
 				}
-			}*/
-			
 		}else if(e.which == 40){
-			alert("Down");
+			//DOWN
+			var down_1 = row(3,6,9);	
+			var down_2 = row(2,5,8);	
+			var down_3 = row(1,4,7);	
+			if( down_1 == "entered" ||  down_2 == "entered" ||  down_3 == "entered" ){
+				down = 1;
+				checkTableValues();
+			}else{
+				alert("down");
+			down = 0;
+				}
 		}else if(e.which == 37){
-			alert("Left");
+			// LEFT
+			var left_1 = row(3,2,1);
+			var left_2 = row(6,5,4);
+			var left_3 = row(9,8,7);
+			
+			alert(left_1);
+			if( left_1 == "entered" ||  left_2 == "entered" ||  left_3 == "entered" ){
+				left = 1;
+				checkTableValues();
+			}else{
+				alert("left");			
+				left = 0;				
+			}
+		}
+		console.log(up)
+		console.log(down)
+		console.log(left)
+		console.log(right)
+		console.log(up == 0 && right == 0 && down == 0 && left == 0)
+		
+		if(up == 0 && right == 0 && down == 0 && left == 0){
+			alert("Game Over");
 		}
 	});
 	
+	function row(a,b,c){
+	var d;
+		if($('.cell_'+c).val() || $('.cell_'+b).val() || $('.cell_'+a).val()){
+				if($('.cell_'+c).val() != '' && $('.cell_'+b).val() != '' && $('.cell_'+a).val() != ''){					
+					if($('.cell_'+c).val() == $('.cell_'+b).val()){
+						var val = parseInt($('.cell_'+c).val()) + parseInt($('.cell_'+b).val());						
+						$('.cell_'+c).html(val);
+						$('.cell_'+c).val(val);
+						
+						$('.cell_'+b).html($('.cell_'+a).val());
+						$('.cell_'+b).val($('.cell_'+a).val());
+						
+						$('.cell_'+a).html('');
+						$('.cell_'+a).val('');
+						
+						d = "entered";
+					}else if($('.cell_'+b).val() == $('.cell_'+a).val()){
+						var val2 = parseInt($('.cell_'+b).val()) + parseInt($('.cell_'+a).val());
+						//alert(val2);
+						$('.cell_'+b).html(val2);
+						$('.cell_'+b).val(val2);
+						
+						$('.cell_'+a).html('');
+						$('.cell_'+a).val('');
+						
+						d = "entered";
+					}
+				}else if($('.cell_'+c).val() == '' && ($('.cell_'+b).val() != '' && $('.cell_'+a).val() != '')){			
+					if($('.cell_'+a).val() == $('.cell_'+b).val()){						
+						var val = parseInt($('.cell_'+a).val()) + parseInt($('.cell_'+b).val());
+						//alert(val);
+						$('.cell_'+c).html(val);
+						$('.cell_'+c).val(val);
+						
+						$('.cell_'+a).html('');
+						$('.cell_'+a).val('');
+						
+						$('.cell_'+b).html('');
+						$('.cell_'+b).val('');
+						
+						d = "entered";
+						//checkTableValues();
+					}else{			
+						$('.cell_'+c).html($('.cell_'+b).val());
+						$('.cell_'+b).html($('.cell_'+a).val());
+						
+						$('.cell_'+c).val($('.cell_'+b).val());
+						$('.cell_'+b).val($('.cell_'+a).val());
+						
+						$('.cell_'+a).html('');
+						$('.cell_'+a).val('');
+						
+						d = "entered";
+						//checkTableValues();
+					}
+				}else if($('.cell_'+b).val() == '' && ($('.cell_'+c).val() != '' && $('.cell_'+a).val() != '')){			
+					if($('.cell_'+a).val() == $('.cell_'+c).val()){						
+						var val = parseInt($('.cell_'+a).val()) + parseInt($('.cell_'+c).val());
+						
+						$('.cell_'+c).html(val);
+						$('.cell_'+c).val(val);
+						
+						$('.cell_'+a).html('');
+						$('.cell_'+a).val('');
+						
+						$('.cell_'+b).html('');
+						$('.cell_'+b).val('');
+						
+						d = "entered";
+						//checkTableValues();
+					}else{
+						$('.cell_'+b).html($('.cell_'+a).val());
+						$('.cell_'+a).html('');
+						
+						$('.cell_'+b).val($('.cell_'+a).val());
+						$('.cell_'+a).val('');
+						
+						d = "entered";
+						//checkTableValues();
+					}
+				}else if($('.cell_'+a).val() == '' && ($('.cell_'+c).val() != '' && $('.cell_'+b).val() != '')){			
+					if($('.cell_'+b).val() == $('.cell_'+c).val()){						
+						var val = parseInt($('.cell_'+b).val()) + parseInt($('.cell_'+c).val());
+						//alert(val);
+						$('.cell_'+c).html(val);
+						$('.cell_'+c).val(val);
+						
+						$('.cell_'+a).html('');
+						$('.cell_'+a).val('');
+						
+						$('.cell_'+b).html('');
+						$('.cell_'+b).val('');
+						
+						d = "entered";
+						//checkTableValues();
+					}else{						
+						//checkTableValues();
+					}
+				}else if($('.cell_'+a).val() != '' && ($('.cell_'+c).val() == '' && $('.cell_'+b).val() == '')){
+					$('.cell_'+c).html($('.cell_'+a).val());
+					$('.cell_'+c).val($('.cell_'+a).val());
+					
+					$('.cell_'+a).html('');
+					$('.cell_'+a).val('');
+					
+					d = "entered";
+				}else if($('.cell_'+b).val() != '' && ($('.cell_'+c).val() == '' && $('.cell_'+a).val() == '')){
+					$('.cell_'+c).html($('.cell_'+b).val());
+					$('.cell_'+c).val($('.cell_'+b).val());
+					
+					$('.cell_'+b).html('');
+					$('.cell_'+b).val('');
+					
+					d = "entered";
+				}
+			
+		}
+		if( d == "entered")
+			return d;
+	}
 	function checkTableValues(){
 		var emptyCell = [];
 		for(var t = 1; t <=9; t++){
@@ -164,7 +270,7 @@
 				emptyCell.push(t);
 			}
 		}
-		console.log(Math.floor(Math.random() * emptyCell.length));
+		//console.log(Math.floor(Math.random() * emptyCell.length));
 		var rand = emptyCell[Math.floor(Math.random() * emptyCell.length)];
 		$('.cell_'+rand).html('2');
 		$('.cell_'+rand).val('2');
