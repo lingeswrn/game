@@ -1,11 +1,14 @@
 <html>
 <head>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 	<style>
 		td,table {
-			border: 1px solid #bbada0;
-			border-radius: 6px;
-			font-family: "Lucida Console", Times, serif;
+			border: 1px solid #bbada0 !important;
+			border-radius: 6px!important;
+			font-family: "Lucida Console", Times, serif!important;
+			    border-spacing: 8px;
+				border-collapse: separate !important;;
 		/*	overflow: hidden;
 			width: 40px !important;
 			min-width: 40px;
@@ -13,29 +16,45 @@
 			height: 25px;*/
 		}
 		span{
-			font-size: 27px;
-			font-weight: 900;
+			font-size: 27px!important;
+			font-weight: 900!important;
+		}
+		h1.title {
+			font-size: 72px;
+			font-weight: bold;
+			margin: 0;
+			display: block;
+			color:#776e65;
 		}
 	</style>
 </head>
 <body>
-	<table align="center">
-		<tr align="center">
-			<td width="100" height="100" ><span class="cell_1"></span><input type="hidden" class="cell_1" /> </td>
-			<td width="100" height="100"><span class="cell_2"></span><input type="hidden" class="cell_2" /></td>
-			<td width="100" height="100"><span class="cell_3"></span><input type="hidden" class="cell_3" /></td>
-		</tr>
-		<tr align="center">
-			<td width="100" height="100"><span class="cell_4"></span><input type="hidden" class="cell_4" /></td>
-			<td width="100" height="100"><span class="cell_5"></span><input type="hidden" class="cell_5" /></td>
-			<td width="100" height="100"><span class="cell_6"></span><input type="hidden" class="cell_6" /></td>
-		</tr>
-		<tr align="center">
-			<td width="100" height="100"><span class="cell_7"></span><input type="hidden" class="cell_7" /></td>
-			<td width="100" height="100"><span class="cell_8"></span><input type="hidden" class="cell_8" /></td>
-			<td width="100" height="100"><span class="cell_9"></span><input type="hidden" class="cell_9" /></td>
-		</tr>
-	</table>	
+	<div class="col-md-3"></div>
+	<div class="col-md-6">
+		<div class="heading">
+		  <h1 class="title">2048</h1>
+		  <h4 class="text-right">SCORE</h4>
+		  <h4 class="text-right" id="score1">0</h4>		
+		</div><br/>
+		<table align="center">
+			<tr align="center">
+				<td width="100" height="100" ><span class="cell_1"></span><input type="hidden" class="cell_1" /> </td>
+				<td width="100" height="100"><span class="cell_2"></span><input type="hidden" class="cell_2" /></td>
+				<td width="100" height="100"><span class="cell_3"></span><input type="hidden" class="cell_3" /></td>
+			</tr>
+			<tr align="center">
+				<td width="100" height="100"><span class="cell_4"></span><input type="hidden" class="cell_4" /></td>
+				<td width="100" height="100"><span class="cell_5"></span><input type="hidden" class="cell_5" /></td>
+				<td width="100" height="100"><span class="cell_6"></span><input type="hidden" class="cell_6" /></td>
+			</tr>
+			<tr align="center">
+				<td width="100" height="100"><span class="cell_7"></span><input type="hidden" class="cell_7" /></td>
+				<td width="100" height="100"><span class="cell_8"></span><input type="hidden" class="cell_8" /></td>
+				<td width="100" height="100"><span class="cell_9"></span><input type="hidden" class="cell_9" /></td>
+			</tr>
+		</table>	
+	</div>
+	<div class="col-md-3"></div>
 	<!-- 
 	
 		Empty : rgba(238, 228, 218, 0.35)
@@ -77,72 +96,16 @@
 			$('.cell_3').val('2');*/
 		}
 	}
-	var up, right, down, left;
-	$(document).keydown(function(e) {	
-		if(e.which == 38) {
-			//UP
-			var up_1 = row(7,4,1);
-			var up_2 = row(8,5,2);
-			var up_3 = row(9,6,3);
-			if( up_1 == "entered" ||  up_2 == "entered" ||  up_3 == "entered" ){
-				up = 1;
-				checkTableValues()
-			}else if(up_1 == "gameover" &&  up_2 == "gameover" &&  up_3 == "gameover"){
-				gameover.push('up');
-				up = 0;
-			}
-		}else if(e.which == 39){
-			//  RIGHT
-			right = 1;
-			var right_1 = row(1,2,3);
-			var right_2 = row(4,5,6);
-			var right_3 = row(7,8,9);			
-			if( right_1 == "entered" ||  right_2 == "entered" ||  right_3 == "entered" ){
-				right = 1;
-				checkTableValues();
-			}else if(right_1 == "gameover" &&  right_2 == "gameover" &&  right_3 == "gameover"){
-				gameover.push('right');
-				right = 0;
-			}
-		}else if(e.which == 40){
-			//DOWN
-			var down_1 = row(3,6,9);	
-			var down_2 = row(2,5,8);	
-			var down_3 = row(1,4,7);	
-			if( down_1 == "entered" ||  down_2 == "entered" ||  down_3 == "entered" ){
-				down = 1;
-				checkTableValues();
-			}else if(down_1 == "gameover" &&  down_2 == "gameover" &&  down_3 == "gameover"){
-				gameover.push('down');
-				down = 0;
-			}
-		}else if(e.which == 37){
-			// LEFT
-			var left_1 = row(3,2,1);
-			var left_2 = row(6,5,4);
-			var left_3 = row(9,8,7);
-			
-			
-			if( left_1 == "entered" ||  left_2 == "entered" ||  left_3 == "entered" ){
-				left = 1;
-				checkTableValues();
-			}else if(left_1 == "gameover" &&  left_2 == "gameover" &&  left_3 == "gameover"){
-				gameover.push('left');
-				left = 0;
-			}
-		}		
-		
-		if(up == 0 && right == 0 && down == 0 && left == 0){
-			alert("Game Over");
-		}
-	});
+	var up, right, down, left, score = 0;
+
 	
 	function row(a,b,c){
 	var d,e;
 		if($('.cell_'+c).val() || $('.cell_'+b).val() || $('.cell_'+a).val()){
 				if($('.cell_'+c).val() != '' && $('.cell_'+b).val() != '' && $('.cell_'+a).val() != ''){					
 					if($('.cell_'+c).val() == $('.cell_'+b).val()){
-						var val = parseInt($('.cell_'+c).val()) + parseInt($('.cell_'+b).val());						
+						var val = parseInt($('.cell_'+c).val()) + parseInt($('.cell_'+b).val());
+						score = score + val;
 						$('.cell_'+c).html(val);
 						$('.cell_'+c).val(val);
 						
@@ -155,6 +118,7 @@
 						d = "entered";
 					}else if($('.cell_'+b).val() == $('.cell_'+a).val()){
 						var val2 = parseInt($('.cell_'+b).val()) + parseInt($('.cell_'+a).val());
+						score = score + val2;
 						//alert(val2);
 						$('.cell_'+b).html(val2);
 						$('.cell_'+b).val(val2);
@@ -170,6 +134,7 @@
 				}else if($('.cell_'+c).val() == '' && ($('.cell_'+b).val() != '' && $('.cell_'+a).val() != '')){			
 					if($('.cell_'+a).val() == $('.cell_'+b).val()){						
 						var val = parseInt($('.cell_'+a).val()) + parseInt($('.cell_'+b).val());
+						score = score + val;
 						//alert(val);
 						$('.cell_'+c).html(val);
 						$('.cell_'+c).val(val);
@@ -198,7 +163,7 @@
 				}else if($('.cell_'+b).val() == '' && ($('.cell_'+c).val() != '' && $('.cell_'+a).val() != '')){			
 					if($('.cell_'+a).val() == $('.cell_'+c).val()){						
 						var val = parseInt($('.cell_'+a).val()) + parseInt($('.cell_'+c).val());
-						
+						score = score + val;
 						$('.cell_'+c).html(val);
 						$('.cell_'+c).val(val);
 						
@@ -223,6 +188,7 @@
 				}else if($('.cell_'+a).val() == '' && ($('.cell_'+c).val() != '' && $('.cell_'+b).val() != '')){			
 					if($('.cell_'+b).val() == $('.cell_'+c).val()){						
 						var val = parseInt($('.cell_'+b).val()) + parseInt($('.cell_'+c).val());
+						score = score + val;
 						//alert(val);
 						$('.cell_'+c).html(val);
 						$('.cell_'+c).val(val);
@@ -262,6 +228,68 @@
 		else if(e == "gameover")
 			return e;
 	}
+		$(document).keydown(function(e) {	
+		if(e.which == 38) {
+			//UP
+			var up_1 = row(7,4,1);
+			var up_2 = row(8,5,2);
+			var up_3 = row(9,6,3);
+				
+			document.getElementById('score1').innerHTML = score;
+			if( up_1 == "entered" ||  up_2 == "entered" ||  up_3 == "entered" ){
+				up = 1;
+				checkTableValues()
+			}else if(up_1 == "gameover" &&  up_2 == "gameover" &&  up_3 == "gameover"){
+				up = 0;
+			}
+		}else if(e.which == 39){
+			//  RIGHT
+			right = 1;
+			var right_1 = row(1,2,3);
+			var right_2 = row(4,5,6);
+			var right_3 = row(7,8,9);
+			
+			document.getElementById('score1').innerHTML = score;			
+			if( right_1 == "entered" ||  right_2 == "entered" ||  right_3 == "entered" ){
+				right = 1;
+				checkTableValues();
+			}else if(right_1 == "gameover" &&  right_2 == "gameover" &&  right_3 == "gameover"){
+				right = 0;
+			}
+		}else if(e.which == 40){
+			//DOWN
+			
+			var down_1 = row(3,6,9);
+			var down_2 = row(2,5,8);
+			var down_3 = row(1,4,7);
+			
+			document.getElementById('score1').innerHTML = score;
+			if( down_1 == "entered" ||  down_2 == "entered" ||  down_3 == "entered" ){
+				down = 1;
+				checkTableValues();
+			}else if(down_1 == "gameover" &&  down_2 == "gameover" &&  down_3 == "gameover"){				
+				down = 0;
+			}
+		}else if(e.which == 37){
+			// LEFT
+			var left_1 = row(3,2,1);
+			var left_2 = row(6,5,4);
+			var left_3 = row(9,8,7);
+			
+			document.getElementById('score1').innerHTML = score;
+			if( left_1 == "entered" ||  left_2 == "entered" ||  left_3 == "entered" ){
+				left = 1;
+				checkTableValues();
+			}else if(left_1 == "gameover" &&  left_2 == "gameover" &&  left_3 == "gameover"){				
+				left = 0;
+			}
+		}		
+		
+		if(up == 0 && right == 0 && down == 0 && left == 0){
+			alert("Game Over");
+		}
+	});
+	
 	function checkTableValues(){
 		var emptyCell = [];
 		for(var t = 1; t <=9; t++){
