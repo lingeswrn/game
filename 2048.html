@@ -77,8 +77,8 @@
 			$('.cell_3').val('2');*/
 		}
 	}
-	$(document).keydown(function(e) {
 	var up, right, down, left;
+	$(document).keydown(function(e) {	
 		if(e.which == 38) {
 			//UP
 			var up_1 = row(7,4,1);
@@ -87,9 +87,8 @@
 			if( up_1 == "entered" ||  up_2 == "entered" ||  up_3 == "entered" ){
 				up = 1;
 				checkTableValues()
-			}
-			else{
-			alert("up");
+			}else if(up_1 == "gameover" &&  up_2 == "gameover" &&  up_3 == "gameover"){
+				gameover.push('up');
 				up = 0;
 			}
 		}else if(e.which == 39){
@@ -101,10 +100,10 @@
 			if( right_1 == "entered" ||  right_2 == "entered" ||  right_3 == "entered" ){
 				right = 1;
 				checkTableValues();
-			}else{
-			alert("right");
+			}else if(right_1 == "gameover" &&  right_2 == "gameover" &&  right_3 == "gameover"){
+				gameover.push('right');
 				right = 0;
-				}
+			}
 		}else if(e.which == 40){
 			//DOWN
 			var down_1 = row(3,6,9);	
@@ -113,30 +112,25 @@
 			if( down_1 == "entered" ||  down_2 == "entered" ||  down_3 == "entered" ){
 				down = 1;
 				checkTableValues();
-			}else{
-				alert("down");
-			down = 0;
-				}
+			}else if(down_1 == "gameover" &&  down_2 == "gameover" &&  down_3 == "gameover"){
+				gameover.push('down');
+				down = 0;
+			}
 		}else if(e.which == 37){
 			// LEFT
 			var left_1 = row(3,2,1);
 			var left_2 = row(6,5,4);
 			var left_3 = row(9,8,7);
 			
-			alert(left_1);
+			
 			if( left_1 == "entered" ||  left_2 == "entered" ||  left_3 == "entered" ){
 				left = 1;
 				checkTableValues();
-			}else{
-				alert("left");			
-				left = 0;				
+			}else if(left_1 == "gameover" &&  left_2 == "gameover" &&  left_3 == "gameover"){
+				gameover.push('left');
+				left = 0;
 			}
-		}
-		console.log(up)
-		console.log(down)
-		console.log(left)
-		console.log(right)
-		console.log(up == 0 && right == 0 && down == 0 && left == 0)
+		}		
 		
 		if(up == 0 && right == 0 && down == 0 && left == 0){
 			alert("Game Over");
@@ -144,7 +138,7 @@
 	});
 	
 	function row(a,b,c){
-	var d;
+	var d,e;
 		if($('.cell_'+c).val() || $('.cell_'+b).val() || $('.cell_'+a).val()){
 				if($('.cell_'+c).val() != '' && $('.cell_'+b).val() != '' && $('.cell_'+a).val() != ''){					
 					if($('.cell_'+c).val() == $('.cell_'+b).val()){
@@ -169,6 +163,9 @@
 						$('.cell_'+a).val('');
 						
 						d = "entered";
+					}else{
+						e = "gameover"
+						console.log("dsdsadsdsadsadsadsdsd")
 					}
 				}else if($('.cell_'+c).val() == '' && ($('.cell_'+b).val() != '' && $('.cell_'+a).val() != '')){			
 					if($('.cell_'+a).val() == $('.cell_'+b).val()){						
@@ -262,6 +259,8 @@
 		}
 		if( d == "entered")
 			return d;
+		else if(e == "gameover")
+			return e;
 	}
 	function checkTableValues(){
 		var emptyCell = [];
