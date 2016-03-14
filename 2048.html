@@ -49,6 +49,9 @@
 		.opacity{
 			opacity: 0.4;
 		}
+		.animate{
+			font-size: 38px!important;
+		}
 	</style>
 </head>
 <body>
@@ -140,17 +143,18 @@ $(document).ready(function(){
 						score = score + val;
 						$('.cell_'+c).html(val);
 						$('.cell_'+c).val(val);
-						$('.cell_'+c).animate({'font-size': 32},'slow');
+						
+						$('.cell_'+c).addClass('animate');
 						setTimeout(function(){
-							$('.cell_'+c).animate({'font-size': 27},'slow');
-						},500);
-						var div = $('.cell_'+c);
-						div.style.setProperty('color', 'red','important');
+							$('.cell_'+c).removeClass('animate');
+						},700);
+						
 						$('.cell_'+b).html($('.cell_'+a).val());
 						$('.cell_'+b).val($('.cell_'+a).val());
 						
 						$('.cell_'+a).html('');
 						$('.cell_'+a).val('');
+						
 						
 						d = "entered";
 					}else if($('.cell_'+b).val() == $('.cell_'+a).val()){
@@ -159,17 +163,18 @@ $(document).ready(function(){
 						//alert(val2);
 						$('.cell_'+b).html(val2);
 						$('.cell_'+b).val(val2);
-						$('.cell_'+b).animate({'font-size': 32},'slow');
+						
+						$('.cell_'+b).addClass('animate');
 						setTimeout(function(){
-							$('.cell_'+b).animate({'font-size': 27},'slow');
-						},500);
+							$('.cell_'+b).removeClass('animate');
+						},700);
+						
 						$('.cell_'+a).html('');
 						$('.cell_'+a).val('');
 						
 						d = "entered";
 					}else{
 						e = "gameover"
-						console.log("dsdsadsdsadsadsadsdsd")
 					}
 				}else if($('.cell_'+c).val() == '' && ($('.cell_'+b).val() != '' && $('.cell_'+a).val() != '')){			
 					if($('.cell_'+a).val() == $('.cell_'+b).val()){						
@@ -179,10 +184,10 @@ $(document).ready(function(){
 						$('.cell_'+c).html(val);
 						$('.cell_'+c).val(val);
 						
-						$('.cell_'+c).animate({'font-size': 32},'slow');
+						$('.cell_'+c).addClass('animate');
 						setTimeout(function(){
-							$('.cell_'+c).animate({'font-size': 27},'slow');
-						},500);
+							$('.cell_'+c).removeClass('animate');
+						},700);
 						
 						$('.cell_'+a).html('');
 						$('.cell_'+a).val('');
@@ -212,10 +217,10 @@ $(document).ready(function(){
 						$('.cell_'+c).html(val);
 						$('.cell_'+c).val(val);
 						
-						$('.cell_'+c).animate({'font-size': 32},'slow');
+						$('.cell_'+c).addClass('animate');
 						setTimeout(function(){
-							$('.cell_'+c).animate({'font-size': 27},'slow');
-						},500);
+							$('.cell_'+c).removeClass('animate');
+						},700);
 						
 						$('.cell_'+a).html('');
 						$('.cell_'+a).val('');
@@ -243,10 +248,10 @@ $(document).ready(function(){
 						$('.cell_'+c).html(val);
 						$('.cell_'+c).val(val);
 						
-						$('.cell_'+c).animate({'font-size': 32},'slow');
+						$('.cell_'+c).addClass('animate');
 						setTimeout(function(){
-							$('.cell_'+c).animate({'font-size': 27},'slow');
-						},500);
+							$('.cell_'+c).removeClass('animate');
+						},700);
 						
 						$('.cell_'+a).html('');
 						$('.cell_'+a).val('');
