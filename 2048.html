@@ -65,6 +65,8 @@
 			<p>
 			  <span class="text-right" style="float: right;">SCORE</span><br/>
 			  <span class="text-right" id="score1" style="float: right;margin: 18px -61px;">0</span>
+			  <button class="btn input-sm" style="float: right;margin: 60px -25px;" onclick="undo()">UNDO</button>
+			  <button class="btn input-sm" style="float: right;margin: 60px -106px;" onclick="reset()">RESET</button>
 			</p>
 		</div>
 		<div class="gameover_dis">
@@ -289,7 +291,18 @@ $(document).ready(function(){
 		else if(e == "gameover")
 			return e;
 	}
-		$(document).keydown(function(e) {	
+		$(document).keydown(function(e) {
+			// SET PREVIOUS STEP
+			localStorage.setItem("cell_1", $('.cell_1').val());
+			localStorage.setItem("cell_2", $('.cell_2').val());
+			localStorage.setItem("cell_3", $('.cell_3').val());
+			localStorage.setItem("cell_4", $('.cell_4').val());
+			localStorage.setItem("cell_5", $('.cell_5').val());
+			localStorage.setItem("cell_6", $('.cell_6').val());
+			localStorage.setItem("cell_7", $('.cell_7').val());
+			localStorage.setItem("cell_8", $('.cell_8').val());
+			localStorage.setItem("cell_9", $('.cell_9').val());
+			
 		if(e.which == 38) {
 			//UP
 			var up_1 = row(7,4,1);
@@ -406,6 +419,14 @@ $(document).ready(function(){
 				$('.cell_'+t).css("color","#f9f6f2");
 			}
 		}
+	}
+	
+	function undo(){
+		
+		var val1  = localStorage.getItem("cell_1");
+		$('cell_1').val(val1);
+		$('cell_1').html(val1);
+		console.log($('cell_1').val(val1));
 	}
 	
 	
