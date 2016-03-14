@@ -3,17 +3,16 @@
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 	<style>
+		html,body{
+			font-family: "Lucida Console", Times, serif!important;
+		}
 		td,table {
 			border: 1px solid #bbada0 !important;
 			border-radius: 6px!important;
 			font-family: "Lucida Console", Times, serif!important;
-			    border-spacing: 8px;
-				border-collapse: separate !important;;
-		/*	overflow: hidden;
-			width: 40px !important;
-			min-width: 40px;
-			padding: 11px;
-			height: 25px;*/
+			border-spacing: 8px;
+			border-collapse: separate !important;
+			
 		}
 		span{
 			font-size: 27px!important;
@@ -26,16 +25,47 @@
 			display: block;
 			color:#776e65;
 		}
+		h4.title {
+			font-size: 28px;
+			font-weight: bold;
+			margin: 0;
+			display: block;
+			color:red;
+		}
+		.gameover_dis {
+			position: relative;
+			width: 400px;
+			margin: 0 auto;
+		}
+		
+		.gameover_dis h4.title {
+			position: absolute;
+			top: 140px;
+			left: 128px;
+		}
+		.hide{
+			display: none;
+		}
+		.opacity{
+			opacity: 0.4;
+		}
 	</style>
 </head>
 <body>
 	<div class="col-md-3"></div>
 	<div class="col-md-6">
 		<div class="heading">
+			
 		  <h1 class="title">2048</h1>
-		  <h4 class="text-right">SCORE</h4>
-		  <h4 class="text-right" id="score1">0</h4>		
-		</div><br/>
+		  <!-- <h4 class="text-right">SCORE</h4>
+		 <h4 class="text-right" id="score1">0</h4>-->
+			<p>
+			  <span class="text-right" style="float: right;">SCORE</span><br/>
+			  <span class="text-right" id="score1" style="float: right;margin: 18px -61px;">0</span>
+			</p>
+		</div>
+		<div class="gameover_dis">
+		<h4 class="title hide">GAME OVER</h4>
 		<table align="center">
 			<tr align="center">
 				<td width="100" height="100" ><span class="cell_1"></span><input type="hidden" class="cell_1" /> </td>
@@ -52,23 +82,25 @@
 				<td width="100" height="100"><span class="cell_8"></span><input type="hidden" class="cell_8" /></td>
 				<td width="100" height="100"><span class="cell_9"></span><input type="hidden" class="cell_9" /></td>
 			</tr>
-		</table>	
+		</table>
+		</div>
 	</div>
 	<div class="col-md-3"></div>
-	<!-- 
 	
-		Empty : rgba(238, 228, 218, 0.35)
-		two : #eee4da
-		four : #ede0c8
-		8 : bg- #f2b179, color - #f9f6f2
-		16 : bg- #f59563, color - #f9f6f2
-		32 : bg- #f67c5f, color - #f9f6f2
-		64 : bg- #f65e3b, color - #f9f6f2
-		128 : bg- #edcf72, color - #f9f6f2
-		256 : bg- #edcc61, color - #f9f6f2
-		 
-	-->
 <script>
+$(document).ready(function(){
+	for(var t = 1; t <=9; t++){
+		if($('.cell_'+t).val() == ''){
+			$('.cell_'+t).parent().css("background-color","rgba(238, 228, 218, 0.35)");
+		}
+		if($('.cell_'+t).val() == '2'){
+			$('.cell_'+t).parent().css("background-color","#eee4da");
+		}
+		if($('.cell_'+t).val() == '4'){
+			$('.cell_'+t).parent().css("background-color","#ede0c8");
+		}			
+	}
+})
 	var val,val2;
 	getRandomNumber();
 	function getRandomNumber(){
@@ -108,7 +140,12 @@
 						score = score + val;
 						$('.cell_'+c).html(val);
 						$('.cell_'+c).val(val);
-						
+						$('.cell_'+c).animate({'font-size': 32},'slow');
+						setTimeout(function(){
+							$('.cell_'+c).animate({'font-size': 27},'slow');
+						},500);
+						var div = $('.cell_'+c);
+						div.style.setProperty('color', 'red','important');
 						$('.cell_'+b).html($('.cell_'+a).val());
 						$('.cell_'+b).val($('.cell_'+a).val());
 						
@@ -122,7 +159,10 @@
 						//alert(val2);
 						$('.cell_'+b).html(val2);
 						$('.cell_'+b).val(val2);
-						
+						$('.cell_'+b).animate({'font-size': 32},'slow');
+						setTimeout(function(){
+							$('.cell_'+b).animate({'font-size': 27},'slow');
+						},500);
 						$('.cell_'+a).html('');
 						$('.cell_'+a).val('');
 						
@@ -138,6 +178,11 @@
 						//alert(val);
 						$('.cell_'+c).html(val);
 						$('.cell_'+c).val(val);
+						
+						$('.cell_'+c).animate({'font-size': 32},'slow');
+						setTimeout(function(){
+							$('.cell_'+c).animate({'font-size': 27},'slow');
+						},500);
 						
 						$('.cell_'+a).html('');
 						$('.cell_'+a).val('');
@@ -167,6 +212,11 @@
 						$('.cell_'+c).html(val);
 						$('.cell_'+c).val(val);
 						
+						$('.cell_'+c).animate({'font-size': 32},'slow');
+						setTimeout(function(){
+							$('.cell_'+c).animate({'font-size': 27},'slow');
+						},500);
+						
 						$('.cell_'+a).html('');
 						$('.cell_'+a).val('');
 						
@@ -192,6 +242,11 @@
 						//alert(val);
 						$('.cell_'+c).html(val);
 						$('.cell_'+c).val(val);
+						
+						$('.cell_'+c).animate({'font-size': 32},'slow');
+						setTimeout(function(){
+							$('.cell_'+c).animate({'font-size': 27},'slow');
+						},500);
 						
 						$('.cell_'+a).html('');
 						$('.cell_'+a).val('');
@@ -223,6 +278,7 @@
 				}
 			
 		}
+		changeColor();
 		if( d == "entered")
 			return d;
 		else if(e == "gameover")
@@ -284,10 +340,8 @@
 				left = 0;
 			}
 		}		
+		changeColor();
 		
-		if(up == 0 && right == 0 && down == 0 && left == 0){
-			alert("Game Over");
-		}
 	});
 	
 	function checkTableValues(){
@@ -301,6 +355,52 @@
 		var rand = emptyCell[Math.floor(Math.random() * emptyCell.length)];
 		$('.cell_'+rand).html('2');
 		$('.cell_'+rand).val('2');
+		changeColor();
+	}
+	
+	function changeColor(){
+		if(up == 0 && right == 0 && down == 0 && left == 0){
+			$('.title').removeClass('hide');
+			$('table').addClass('opacity');
+		}
+		for(var t = 1; t <=9; t++){
+			if($('.cell_'+t).val() == ''){
+				$('.cell_'+t).parent().css("background-color","rgba(238, 228, 218, 0.35)");
+			}else if($('.cell_'+t).val() == '2'){
+				$('.cell_'+t).css("color","#000000");
+				$('.cell_'+t).parent().css("background-color","#eee4da");
+			}else if($('.cell_'+t).val() == '4'){
+				$('.cell_'+t).css("color","#000000");
+				$('.cell_'+t).parent().css("background-color","#ede0c8");
+			}else if($('.cell_'+t).val() == '8'){
+				$('.cell_'+t).parent().css("background-color","#f2b179");
+				$('.cell_'+t).css("color","#f9f6f2");
+			}else if($('.cell_'+t).val() == '16'){
+				$('.cell_'+t).parent().css("background-color","#f59563");
+				$('.cell_'+t).css("color","#f9f6f2");
+			}else if($('.cell_'+t).val() == '32'){
+				$('.cell_'+t).parent().css("background-color","#f67c5f");
+				$('.cell_'+t).css("color","#f9f6f2");
+			}else if($('.cell_'+t).val() == '64'){
+				$('.cell_'+t).parent().css("background-color","#f65e3b");
+				$('.cell_'+t).css("color","#f9f6f2");
+			}else if($('.cell_'+t).val() == '128'){
+				$('.cell_'+t).parent().css("background-color","#edcf72");
+				$('.cell_'+t).css("color","#f9f6f2");
+			}else if($('.cell_'+t).val() == '256'){
+				$('.cell_'+t).parent().css("background-color","#edcc61");
+				$('.cell_'+t).css("color","#f9f6f2");
+			}else if($('.cell_'+t).val() == '512'){
+				$('.cell_'+t).parent().css("background-color","#e6b619");
+				$('.cell_'+t).css("color","#f9f6f2");
+			}else if($('.cell_'+t).val() == '1024'){
+				$('.cell_'+t).parent().css("background-color","#00cc66");
+				$('.cell_'+t).css("color","#f9f6f2");
+			}else if($('.cell_'+t).val() == '2048'){
+				$('.cell_'+t).parent().css("background-color","#00994d");
+				$('.cell_'+t).css("color","#f9f6f2");
+			}
+		}
 	}
 	
 	
