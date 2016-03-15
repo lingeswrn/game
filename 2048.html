@@ -38,19 +38,24 @@
 			margin: 0 auto;
 		}
 		
-		.gameover_dis h4.title {
+		.gameover_pos {
 			position: absolute;
 			top: 140px;
 			left: 128px;
+			text-align: center;
 		}
 		.hide{
 			display: none;
 		}
 		.opacity{
-			opacity: 0.4;
+			opacity: 0.1;
 		}
 		.animate{
 			font-size: 38px!important;
+			}
+		.btn-color{
+			background: #776e65!important;
+			color: white!important;
 		}
 	</style>
 </head>
@@ -65,12 +70,15 @@
 			<p>
 			  <span class="text-right" style="float: right;">SCORE</span><br/>
 			  <span class="text-right" id="score1" style="float: right;margin: 18px -61px;">0</span>
-			  <button class="btn input-sm" style="float: right;margin: 60px -25px;" onclick="undo()">UNDO</button>
-			  <button class="btn input-sm" style="float: right;margin: 60px -106px;" onclick="reset()">RESET</button>
+			  <button class="btn input-sm hide btn-color" style="float: right;margin: 60px -25px;" onclick="undo()">UNDO</button>
+			  <button class="btn input-sm hide btn-color" style="float: right;margin: 60px -106px;" onclick="reset()">RESET</button>
 			</p>
 		</div>
 		<div class="gameover_dis">
-		<h4 class="title hide">GAME OVER</h4>
+			<div class="gameover_pos">
+				<h4 class="title">GAME OVER</h4>
+				<button class="btn btn-color" onclick="submit_score()">SUBMIT</button>
+			</div>
 		<table align="center">
 			<tr align="center">
 				<td width="100" height="100" ><span class="cell_1"></span><input type="hidden" class="cell_1" /> </td>
@@ -94,6 +102,7 @@
 	
 <script>
 $(document).ready(function(){
+	$('.gameover_dis').find('.gameover_pos').hide()
 	for(var t = 1; t <=9; t++){
 		if($('.cell_'+t).val() == ''){
 			$('.cell_'+t).parent().css("background-color","rgba(238, 228, 218, 0.35)");
@@ -105,7 +114,8 @@ $(document).ready(function(){
 			$('.cell_'+t).parent().css("background-color","#ede0c8");
 		}			
 	}
-})
+});
+
 	var val,val2;
 	getRandomNumber();
 	function getRandomNumber(){
@@ -149,7 +159,7 @@ $(document).ready(function(){
 						$('.cell_'+c).addClass('animate');
 						setTimeout(function(){
 							$('.cell_'+c).removeClass('animate');
-						},700);
+						},500);
 						
 						$('.cell_'+b).html($('.cell_'+a).val());
 						$('.cell_'+b).val($('.cell_'+a).val());
@@ -169,7 +179,7 @@ $(document).ready(function(){
 						$('.cell_'+b).addClass('animate');
 						setTimeout(function(){
 							$('.cell_'+b).removeClass('animate');
-						},700);
+						},500);
 						
 						$('.cell_'+a).html('');
 						$('.cell_'+a).val('');
@@ -189,7 +199,7 @@ $(document).ready(function(){
 						$('.cell_'+c).addClass('animate');
 						setTimeout(function(){
 							$('.cell_'+c).removeClass('animate');
-						},700);
+						},500);
 						
 						$('.cell_'+a).html('');
 						$('.cell_'+a).val('');
@@ -222,7 +232,7 @@ $(document).ready(function(){
 						$('.cell_'+c).addClass('animate');
 						setTimeout(function(){
 							$('.cell_'+c).removeClass('animate');
-						},700);
+						},500);
 						
 						$('.cell_'+a).html('');
 						$('.cell_'+a).val('');
@@ -253,7 +263,7 @@ $(document).ready(function(){
 						$('.cell_'+c).addClass('animate');
 						setTimeout(function(){
 							$('.cell_'+c).removeClass('animate');
-						},700);
+						},500);
 						
 						$('.cell_'+a).html('');
 						$('.cell_'+a).val('');
@@ -292,73 +302,105 @@ $(document).ready(function(){
 			return e;
 	}
 		$(document).keydown(function(e) {
-			// SET PREVIOUS STEP
-			localStorage.setItem("cell_1", $('.cell_1').val());
-			localStorage.setItem("cell_2", $('.cell_2').val());
-			localStorage.setItem("cell_3", $('.cell_3').val());
-			localStorage.setItem("cell_4", $('.cell_4').val());
-			localStorage.setItem("cell_5", $('.cell_5').val());
-			localStorage.setItem("cell_6", $('.cell_6').val());
-			localStorage.setItem("cell_7", $('.cell_7').val());
-			localStorage.setItem("cell_8", $('.cell_8').val());
-			localStorage.setItem("cell_9", $('.cell_9').val());
+			var a = gameOver();
 			
-		if(e.which == 38) {
-			//UP
-			var up_1 = row(7,4,1);
-			var up_2 = row(8,5,2);
-			var up_3 = row(9,6,3);
+			if(a != '111'){
+			
+				// SET PREVIOUS STEP				
+				 var count = 0;
+				 var count_empty = 0;
+				 for(var j = 1; j <= 9; j++){
+					if( $('.cell_'+j).val() != '')
+						count_empty++;
+				 }
 				
-			document.getElementById('score1').innerHTML = score;
-			if( up_1 == "entered" ||  up_2 == "entered" ||  up_3 == "entered" ){
-				up = 1;
-				checkTableValues()
-			}else if(up_1 == "gameover" &&  up_2 == "gameover" &&  up_3 == "gameover"){
-				up = 0;
-			}
-		}else if(e.which == 39){
-			//  RIGHT
-			right = 1;
-			var right_1 = row(1,2,3);
-			var right_2 = row(4,5,6);
-			var right_3 = row(7,8,9);
-			
-			document.getElementById('score1').innerHTML = score;			
-			if( right_1 == "entered" ||  right_2 == "entered" ||  right_3 == "entered" ){
+				for(var i= 1; i<=9; i++){
+				
+					//console.log($('.cell_'+i).val())
+					//console.log(localStorage.getItem('cell_'+i))
+					//console.log($('.cell_'+i).val() +"=="+ localStorage.getItem('cell_'+i))
+					if($('.cell_'+i).val() == localStorage.getItem('cell_'+i)){
+					
+						count++;console.log("count="+count);
+					}
+					
+				}
+				console.log(count +"!="+ count_empty);
+				//alert(count);
+				if(count != count_empty){
+					
+					localStorage.setItem("cell_1", $('.cell_1').val());
+					localStorage.setItem("cell_2", $('.cell_2').val());
+					localStorage.setItem("cell_3", $('.cell_3').val());
+					localStorage.setItem("cell_4", $('.cell_4').val());
+					localStorage.setItem("cell_5", $('.cell_5').val());
+					localStorage.setItem("cell_6", $('.cell_6').val());
+					localStorage.setItem("cell_7", $('.cell_7').val());
+					localStorage.setItem("cell_8", $('.cell_8').val());
+					localStorage.setItem("cell_9", $('.cell_9').val());
+					localStorage.setItem("score", score);
+				}
+				$('.input-sm').removeClass('hide');
+			if(e.which == 38) {
+				//UP
+				var up_1 = row(7,4,1);
+				var up_2 = row(8,5,2);
+				var up_3 = row(9,6,3);
+				//score
+				document.getElementById('score1').innerHTML = score;
+				if( up_1 == "entered" ||  up_2 == "entered" ||  up_3 == "entered" ){
+					up = 1;
+					checkTableValues()
+				}else if(up_1 == "gameover" &&  up_2 == "gameover" &&  up_3 == "gameover"){
+					up = 0;
+				}
+			}else if(e.which == 39){
+				//  RIGHT
 				right = 1;
-				checkTableValues();
-			}else if(right_1 == "gameover" &&  right_2 == "gameover" &&  right_3 == "gameover"){
-				right = 0;
-			}
-		}else if(e.which == 40){
-			//DOWN
-			
-			var down_1 = row(3,6,9);
-			var down_2 = row(2,5,8);
-			var down_3 = row(1,4,7);
-			
-			document.getElementById('score1').innerHTML = score;
-			if( down_1 == "entered" ||  down_2 == "entered" ||  down_3 == "entered" ){
-				down = 1;
-				checkTableValues();
-			}else if(down_1 == "gameover" &&  down_2 == "gameover" &&  down_3 == "gameover"){				
-				down = 0;
-			}
-		}else if(e.which == 37){
-			// LEFT
-			var left_1 = row(3,2,1);
-			var left_2 = row(6,5,4);
-			var left_3 = row(9,8,7);
-			
-			document.getElementById('score1').innerHTML = score;
-			if( left_1 == "entered" ||  left_2 == "entered" ||  left_3 == "entered" ){
-				left = 1;
-				checkTableValues();
-			}else if(left_1 == "gameover" &&  left_2 == "gameover" &&  left_3 == "gameover"){				
-				left = 0;
-			}
-		}		
-		changeColor();
+				var right_1 = row(1,2,3);
+				var right_2 = row(4,5,6);
+				var right_3 = row(7,8,9);
+				
+				document.getElementById('score1').innerHTML = score;			
+				if( right_1 == "entered" ||  right_2 == "entered" ||  right_3 == "entered" ){
+					right = 1;
+					checkTableValues();
+				}else if(right_1 == "gameover" &&  right_2 == "gameover" &&  right_3 == "gameover"){
+					right = 0;
+				}
+			}else if(e.which == 40){
+				//DOWN
+				
+				var down_1 = row(3,6,9);
+				var down_2 = row(2,5,8);
+				var down_3 = row(1,4,7);
+				
+				document.getElementById('score1').innerHTML = score;
+				if( down_1 == "entered" ||  down_2 == "entered" ||  down_3 == "entered" ){
+					down = 1;
+					checkTableValues();
+				}else if(down_1 == "gameover" &&  down_2 == "gameover" &&  down_3 == "gameover"){				
+					down = 0;
+				}
+			}else if(e.which == 37){
+				// LEFT
+				var left_1 = row(3,2,1);
+				var left_2 = row(6,5,4);
+				var left_3 = row(9,8,7);
+				
+				document.getElementById('score1').innerHTML = score;
+				if( left_1 == "entered" ||  left_2 == "entered" ||  left_3 == "entered" ){
+					left = 1;
+					checkTableValues();
+				}else if(left_1 == "gameover" &&  left_2 == "gameover" &&  left_3 == "gameover"){				
+					left = 0;
+				}
+			}		
+			changeColor();
+		}else{		
+			$('.gameover_pos').slideDown('slow');
+			$('table').addClass('opacity');
+		}
 		
 	});
 	
@@ -374,13 +416,18 @@ $(document).ready(function(){
 		$('.cell_'+rand).html('2');
 		$('.cell_'+rand).val('2');
 		changeColor();
+		var a = gameOver();
+		if(a == '111'){
+			$('.gameover_pos').slideDown('slow');
+			$('table').addClass('opacity');
+		}
 	}
 	
 	function changeColor(){
-		if(up == 0 && right == 0 && down == 0 && left == 0){
+		/*if(up == 0 && right == 0 && down == 0 && left == 0){
 			$('.title').removeClass('hide');
 			$('table').addClass('opacity');
-		}
+		} */
 		for(var t = 1; t <=9; t++){
 			if($('.cell_'+t).val() == ''){
 				$('.cell_'+t).parent().css("background-color","rgba(238, 228, 218, 0.35)");
@@ -422,14 +469,44 @@ $(document).ready(function(){
 	}
 	
 	function undo(){
-		
-		var val1  = localStorage.getItem("cell_1");
-		$('cell_1').val(val1);
-		$('cell_1').html(val1);
-		console.log($('cell_1').val(val1));
+		for(var i = 1; i<=9;i++){
+			var val = localStorage.getItem('cell_'+i);
+			$('.cell_'+i).val('');
+			$('.cell_'+i).html('');
+			
+			$('.cell_'+i).val(val);
+			$('.cell_'+i).html(val);
+		}
+		//localStorage.getItem(score)
+		document.getElementById('score1').innerHTML = localStorage.getItem('score');
+		score = parseInt(localStorage.getItem('score'));
+		changeColor();
+		$('.gameover_dis').find('.gameover_pos').addClass('hide');		
+		$('.gameover_dis').find('table').removeClass('opacity');
 	}
 	
-	
+	function reset(){		
+		localStorage.clear();
+		for(var i = 1; i<=9;i++){
+			$('.cell_'+i).val('');
+			$('.cell_'+i).html('');
+		}	
+		writeInitialValue();
+		changeColor();
+		score = 0;
+		document.getElementById('score1').innerHTML = 0;
+		$('.gameover_dis').find('.gameover_pos').addClass('hide');		
+		$('.gameover_dis').find('table').removeClass('opacity');
+		$('.input-sm').addClass('hide');
+	}
+	function gameOver(){
+		if($('.cell_1').val() != '' && $('.cell_2').val() != '' && $('.cell_3').val() != '' && $('.cell_4').val() != '' && $('.cell_5').val() != '' && $('.cell_6').val() != '' && $('.cell_7').val() != '' && $('.cell_8').val() != '' && $('.cell_9').val() != ''){
+			if( ($('.cell_2').val() != $('.cell_1').val()) && ($('.cell_2').val() != $('.cell_3').val()) && ($('.cell_2').val() != $('.cell_5').val()) && ($('.cell_6').val() != $('.cell_3').val()) && ($('.cell_6').val() != $('.cell_5').val()) && ($('.cell_6').val() != $('.cell_9').val()) && ($('.cell_8').val() != $('.cell_9').val()) && ($('.cell_8').val() != $('.cell_7').val()) && ($('.cell_8').val() != $('.cell_5').val()) && ($('.cell_4').val() != $('.cell_7').val()) && ($('.cell_4').val() != $('.cell_1').val()) && ($('.cell_4').val() != $('.cell_5').val())){
+			
+				return '111';
+			}
+		} 
+	}
 </script>
 </body>
 </html>
