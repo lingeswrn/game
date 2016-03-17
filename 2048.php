@@ -75,8 +75,8 @@
 			<p>
 			  <span class="text-right" style="float: right;">SCORE</span><br/>
 			  <span class="text-right" id="score1" style="float: right;margin: 18px -61px;">0</span>
-			  <button class="btn input-sm hide btn-color" style="float: right;margin: 60px -25px;" onclick="undo()">UNDO</button>
-			  <button class="btn input-sm hide btn-color" style="float: right;margin: 60px -106px;" onclick="reset()">RESET</button>
+			  <button class="btn input-sm btn-color" style="float: right;margin: 60px -25px;" onclick="undo()">UNDO</button>
+			  <button class="btn input-sm btn-color" style="float: right;margin: 60px -106px;" onclick="reset()">RESET</button>
 			</p>
 		</div>
 		<div class="gameover_dis">
@@ -507,7 +507,7 @@ $(document).ready(function(){
 		document.getElementById('score1').innerHTML = localStorage.getItem('score');
 		score = parseInt(localStorage.getItem('score'));
 		changeColor();
-		$('.gameover_dis').find('.gameover_pos').addClass('hide');		
+		$('.gameover_dis').find('.gameover_pos').hide();		
 		$('.gameover_dis').find('table').removeClass('opacity');
 	}
 	
@@ -521,7 +521,7 @@ $(document).ready(function(){
 		changeColor();
 		score = 0;
 		document.getElementById('score1').innerHTML = 0;
-		$('.gameover_dis').find('.gameover_pos').addClass('hide');		
+		$('.gameover_dis').find('.gameover_pos').hide();		
 		$('.gameover_dis').find('table').removeClass('opacity');
 		$('.input-sm').addClass('hide');
 	}
@@ -559,7 +559,13 @@ $(document).ready(function(){
 				type: 'POST',
 				url: 'ajax/submit.php',
 				data:{
-					'mailid': mail
+					'mailid': mail,
+					'score' : score
+				},
+				success:function(response){
+					if(response == 1){
+						location.reload();
+					}
 				}
 			});
 		}else{
