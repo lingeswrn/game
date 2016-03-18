@@ -1,3 +1,7 @@
+<?php 
+
+	session_start(); 
+?>
 <html>
 <head>
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -14,6 +18,9 @@
 			border-spacing: 8px;
 			border-collapse: separate !important;
 			
+		}
+		#top table{
+			border: 0px solid #bbada0 !important;
 		}
 		span{
 			font-size: 27px!important;
@@ -62,48 +69,83 @@
 		.error{
 			color: red;
 		}
+		#high_score{
+			padding-left: 14%;
+		}
+		.profile{
+			font-family: "Comic Sans MS";
+			border: 2px rgb(238, 228, 218) solid;
+			padding: 11px;
+			border-radius: 9px;
+		}
 	</style>
 </head>
 <body>
-	<div class="col-md-3"></div>
-	<div class="col-md-6">
-		<div class="heading">
-			
-		  <h1 class="title">2048</h1>
-		  <!-- <h4 class="text-right">SCORE</h4>
-		 <h4 class="text-right" id="score1">0</h4>-->
-			<p>
-			  <span class="text-right" style="float: right;">SCORE</span><br/>
-			  <span class="text-right" id="score1" style="float: right;margin: 18px -61px;">0</span>
-			  <button class="btn input-sm btn-color" style="float: right;margin: 60px -25px;" onclick="undo()">UNDO</button>
-			  <button class="btn input-sm btn-color" style="float: right;margin: 60px -106px;" onclick="reset()">RESET</button>
-			</p>
-		</div>
-		<div class="gameover_dis">
-			<div class="gameover_pos">
-				<h4 class="title">GAME OVER</h4>
-				<button class="btn btn-color" onclick="submit_score()">SUBMIT</button>
+	<div class="col-md-3 col-xs-12 col-sm-12"></div>
+	<div class="col-md-6 col-xs-12 col-sm-12">
+		<div class="col-md-12 col-xs-12 col-sm-12">
+			<div class="heading col-md-12 col-xs-12 col-sm-12">
+				<h1 class="title">2048</h1>
 			</div>
-		<table align="center">
-			<tr align="center">
-				<td width="100" height="100" ><span class="cell_1"></span><input type="hidden" class="cell_1" /> </td>
-				<td width="100" height="100"><span class="cell_2"></span><input type="hidden" class="cell_2" /></td>
-				<td width="100" height="100"><span class="cell_3"></span><input type="hidden" class="cell_3" /></td>
-			</tr>
-			<tr align="center">
-				<td width="100" height="100"><span class="cell_4"></span><input type="hidden" class="cell_4" /></td>
-				<td width="100" height="100"><span class="cell_5"></span><input type="hidden" class="cell_5" /></td>
-				<td width="100" height="100"><span class="cell_6"></span><input type="hidden" class="cell_6" /></td>
-			</tr>
-			<tr align="center">
-				<td width="100" height="100"><span class="cell_7"></span><input type="hidden" class="cell_7" /></td>
-				<td width="100" height="100"><span class="cell_8"></span><input type="hidden" class="cell_8" /></td>
-				<td width="100" height="100"><span class="cell_9"></span><input type="hidden" class="cell_9" /></td>
-			</tr>
-		</table>
+		</div>
+		<div class="col-md-5 col-xs-12 col-sm-6">
+			<?php if($_SESSION['score']){?>
+			<span>HIGH SCORE</span><br/>
+			<span id="high_score"><?php echo $_SESSION['score']; ?></span>
+			<?php } ?>
+		</div>
+		<div class="col-md-7 col-xs-12 col-sm-6">
+			<span class="text-right" style="float: right;">SCORE</span><br/>
+			<span class="text-right" id="score1" style="float: right;margin: 18px -61px;">0</span>
+			<button class="btn input-sm btn-color undo-comm"  onclick="undo()">UNDO</button>
+			<button class="btn input-sm btn-color undo-comm" onclick="reset()">RESET</button>			
+		</div>
+		<div class="col-md-3 col-xs-12 col-sm-12 text-center">		
+			<div class="profile">
+				<h4>PROFILE</h4>
+				<hr/>
+				<img src="img/icons/<?php echo $_SESSION['image'];?>">
+				<h4>Rank</h4>
+				<h5 class="text-left"><?php echo $_SESSION['name'];?></h5>
+				<h5 class="text-left"><?php echo $_SESSION['mail'];?></h5>
+				<h5 class="text-left">Winning Times</h5>
+				<button class="btn btn-danger btn-block input-sm">Logout</button>
+			</div>
+		</div> 
+		<div class="col-md-6 col-xs-12 col-sm-12">
+			<div class="gameover_dis">
+				<div class="gameover_pos">
+					<h4 class="title">GAME OVER</h4>
+					<button class="btn btn-color" onclick="submit_score()">SUBMIT</button>
+				</div>
+			<table align="center">
+				<tr align="center">
+					<td width="100" height="100" ><span class="cell_1"></span><input type="hidden" class="cell_1" /> </td>
+					<td width="100" height="100"><span class="cell_2"></span><input type="hidden" class="cell_2" /></td>
+					<td width="100" height="100"><span class="cell_3"></span><input type="hidden" class="cell_3" /></td>
+				</tr>
+				<tr align="center">
+					<td width="100" height="100"><span class="cell_4"></span><input type="hidden" class="cell_4" /></td>
+					<td width="100" height="100"><span class="cell_5"></span><input type="hidden" class="cell_5" /></td>
+					<td width="100" height="100"><span class="cell_6"></span><input type="hidden" class="cell_6" /></td>
+				</tr>
+				<tr align="center">
+					<td width="100" height="100"><span class="cell_7"></span><input type="hidden" class="cell_7" /></td>
+					<td width="100" height="100"><span class="cell_8"></span><input type="hidden" class="cell_8" /></td>
+					<td width="100" height="100"><span class="cell_9"></span><input type="hidden" class="cell_9" /></td>
+				</tr>
+			</table>
+			</div>
+		</div>
+		<div class="col-md-3 col-xs-12 col-sm-12">
+			<div class="profile">
+				<h4 class="text-center">TOP 10 RANK</h4>
+				<hr/>				
+				<div id="top"></div>
+			</div>
 		</div>
 	</div>
-	<div class="col-md-3"></div>
+	<div class="col-md-3 col-xs-12 col-sm-12"></div>
 	
 	<!-- Submit Popup -->
 	<div id="submit" class="modal fade" role="dialog">
@@ -118,6 +160,7 @@
 			  <div class="modal-body">
 				<h5 id="error" class="error"> </h5>
 				<div class="form-group">
+					<input type="text" class="form-control" id="name" placeholder="Enter Name Here" /><br/>
 					<input type="email" class="form-control" id="email" placeholder="Enter Email id Here" />
 				</div>
 			  </div>
@@ -130,7 +173,8 @@
 	</div>
 <script>
 $(document).ready(function(){
-	$('.gameover_dis').find('.gameover_pos').hide()
+	$('.gameover_dis').find('.gameover_pos').hide();
+	$('.undo-comm').addClass('hide');
 	for(var t = 1; t <=9; t++){
 		if($('.cell_'+t).val() == ''){
 			$('.cell_'+t).parent().css("background-color","rgba(238, 228, 218, 0.35)");
@@ -364,7 +408,7 @@ $(document).ready(function(){
 			var a = gameOver();
 			
 			if(a != '111'){
-				$('.input-sm').removeClass('hide');
+				$('.undo-comm').removeClass('hide');
 				if(e.which == 38) {
 					//UP
 					var up_1 = row(7,4,1);
@@ -523,7 +567,7 @@ $(document).ready(function(){
 		document.getElementById('score1').innerHTML = 0;
 		$('.gameover_dis').find('.gameover_pos').hide();		
 		$('.gameover_dis').find('table').removeClass('opacity');
-		$('.input-sm').addClass('hide');
+		$('.undo-comm').addClass('hide');
 	}
 	function gameOver(){
 		if($('.cell_1').val() != '' && $('.cell_2').val() != '' && $('.cell_3').val() != '' && $('.cell_4').val() != '' && $('.cell_5').val() != '' && $('.cell_6').val() != '' && $('.cell_7').val() != '' && $('.cell_8').val() != '' && $('.cell_9').val() != ''){
@@ -553,13 +597,15 @@ $(document).ready(function(){
 	
 	$( "#register" ).submit(function( event ) {
 		var mail = $('#email').val();
+		var name = $('#name').val();
 		event.preventDefault();
-		if(mail != ''){
+		if(mail != '' && name != '' ){
 			$.ajax({
 				type: 'POST',
 				url: 'ajax/submit.php',
 				data:{
 					'mailid': mail,
+					'name': name,
 					'score' : score
 				},
 				success:function(response){
@@ -569,10 +615,20 @@ $(document).ready(function(){
 				}
 			});
 		}else{
-			document.getElementById('error').innerHTML = 'Enter your Mail Id.';
+			document.getElementById('error').innerHTML = 'Fill All The Fields';
 			event.preventDefault();
 		}			
 	});
+	function getTop(){
+		$.ajax({
+			type: 'POST',
+			url: 'ajax/getTop.php',
+			success:function(response){
+				$('#top').html(response);
+			}
+		});
+	}
+	getTop();
 </script>
 </body>
 </html>

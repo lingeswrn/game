@@ -1,4 +1,5 @@
 <?php
+	session_start();
 	include('../config/db_config.php');
 	
 	$val =  $_POST['mailid'];
@@ -20,6 +21,7 @@
 		$_SESSION['id'] = $row['id'];
 		$_SESSION['name'] = $row['name'];
 		$_SESSION['mail'] = $row['mailid'];
+		$_SESSION['image'] = $row['image'];
 		
 	}else{
 		$result = mysql_query("INSERT INTO `users` (`mailid`,`score`) VALUES ('$val','$score')");
@@ -29,7 +31,8 @@
 		$_SESSION['id'] = $result['id'];
 		$_SESSION['name'] = $result['name'];
 		$_SESSION['mail'] = $result['mailid'];
-		$_SESSION['score'] = $result['score'];		
+		$_SESSION['score'] = $result['score'];
+		$_SESSION['image'] = $row['image'];
 	}
 	echo "1";
 	
