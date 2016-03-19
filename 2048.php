@@ -1,6 +1,7 @@
 <?php 
-
+	error_reporting(0);
 	session_start(); 
+	
 ?>
 <html>
 <head>
@@ -78,18 +79,21 @@
 			padding: 11px;
 			border-radius: 9px;
 		}
+		.login{
+			border: 2px rgb(238, 228, 218) solid;
+			border-radius: 9px;
+			padding: 146px;
+		}
 	</style>
 </head>
-<body>
-	<div class="col-md-3 col-xs-12 col-sm-12"></div>
-	<div class="col-md-6 col-xs-12 col-sm-12">
+<body>	
 		<div class="col-md-12 col-xs-12 col-sm-12">
 			<div class="heading col-md-12 col-xs-12 col-sm-12">
 				<h1 class="title">2048</h1>
 			</div>
 		</div>
 		<div class="col-md-5 col-xs-12 col-sm-6">
-			<?php if($_SESSION['score']){?>
+			<?php if($_SESSION['score'] != ''){?>
 			<span>HIGH SCORE</span><br/>
 			<span id="high_score"><?php echo $_SESSION['score']; ?></span>
 			<?php } ?>
@@ -100,17 +104,23 @@
 			<button class="btn input-sm btn-color undo-comm"  onclick="undo()">UNDO</button>
 			<button class="btn input-sm btn-color undo-comm" onclick="reset()">RESET</button>			
 		</div>
-		<div class="col-md-3 col-xs-12 col-sm-12 text-center">		
-			<div class="profile">
-				<h4>PROFILE</h4>
-				<hr/>
-				<img src="img/icons/<?php echo $_SESSION['image'];?>">
-				<h4>Rank</h4>
-				<h5 class="text-left"><?php echo $_SESSION['name'];?></h5>
-				<h5 class="text-left"><?php echo $_SESSION['mail'];?></h5>
-				<h5 class="text-left">Winning Times</h5>
-				<button class="btn btn-danger btn-block input-sm">Logout</button>
-			</div>
+		<div class="col-md-3 col-xs-12 col-sm-12 text-center">
+			<?php if($_SESSION['name']) { ?>
+				<div class="profile">				
+					<h4>PROFILE</h4>
+					<hr/>
+					<img src="img/icons/<?php echo $_SESSION['image'];?>">
+					<h4>Rank</h4>
+					<h5 class="text-left"><?php echo $_SESSION['name'];?></h5>
+					<h5 class="text-left"><?php echo $_SESSION['mail'];?></h5>
+					<h5 class="text-left">Winning Times</h5>
+					<button class="btn btn-danger btn-block input-sm" onclick="logout()">Logout</button>				
+				</div>
+			<?php }else{ ?>
+				<div class="login">
+					<button class="btn btn-color input-sm" onclick="submit_score()">Register/Login</button>
+				</div>
+			<?php } ?>
 		</div> 
 		<div class="col-md-6 col-xs-12 col-sm-12">
 			<div class="gameover_dis">
@@ -144,8 +154,6 @@
 				<div id="top"></div>
 			</div>
 		</div>
-	</div>
-	<div class="col-md-3 col-xs-12 col-sm-12"></div>
 	
 	<!-- Submit Popup -->
 	<div id="submit" class="modal fade" role="dialog">
@@ -418,7 +426,7 @@ $(document).ready(function(){
 					document.getElementById('score1').innerHTML = score;
 					if( up_1 == "entered" ||  up_2 == "entered" ||  up_3 == "entered" ){
 						up = 1;
-						checkTableValues()
+						checkTableValues(e)
 					}else if(up_1 == "gameover" &&  up_2 == "gameover" &&  up_3 == "gameover"){
 						up = 0;
 					}
@@ -432,7 +440,7 @@ $(document).ready(function(){
 					document.getElementById('score1').innerHTML = score;			
 					if( right_1 == "entered" ||  right_2 == "entered" ||  right_3 == "entered" ){
 						right = 1;
-						checkTableValues();
+						checkTableValues(e);
 					}else if(right_1 == "gameover" &&  right_2 == "gameover" &&  right_3 == "gameover"){
 						right = 0;
 					}
@@ -446,7 +454,7 @@ $(document).ready(function(){
 					document.getElementById('score1').innerHTML = score;
 					if( down_1 == "entered" ||  down_2 == "entered" ||  down_3 == "entered" ){
 						down = 1;
-						checkTableValues();
+						checkTableValues(e);
 					}else if(down_1 == "gameover" &&  down_2 == "gameover" &&  down_3 == "gameover"){				
 						down = 0;
 					}
@@ -459,7 +467,7 @@ $(document).ready(function(){
 					document.getElementById('score1').innerHTML = score;
 					if( left_1 == "entered" ||  left_2 == "entered" ||  left_3 == "entered" ){
 						left = 1;
-						checkTableValues();
+						checkTableValues(e);
 					}else if(left_1 == "gameover" &&  left_2 == "gameover" &&  left_3 == "gameover"){				
 						left = 0;
 					}
@@ -472,13 +480,47 @@ $(document).ready(function(){
 		
 	});
 	
-	function checkTableValues(){
+	function checkTableValues(e){
 		var emptyCell = [];
-		for(var t = 1; t <=9; t++){
-			if($('.cell_'+t).val() == ''){
-				emptyCell.push(t);
+		if(e.which == 38)
+		{
+			for(var t = 7; t <=9; t++){
+				if($('.cell_'+t).val() == ''){
+					emptyCell.push(t);
+				}
 			}
 		}
+		else if(e.which == 39)
+		{
+			var emp_arry = [1,4,7];
+			for(var t = 0; t <=2; t++){
+				if($('.cell_'+emp_arry[t]).val() == ''){
+					emptyCell.push(emp_arry[t]);
+				}
+			}
+			
+		}
+		else if(e.which == 40)
+		{
+			var emp_arry = [1,2,3];
+			for(var t = 0; t <=2; t++){
+				if($('.cell_'+emp_arry[t]).val() == ''){
+					emptyCell.push(emp_arry[t]);
+				}
+			}
+			
+		}
+		else if(e.which == 37)
+		{
+			var emp_arry = [3,6,9];
+			for(var t = 0; t <=2; t++){
+				if($('.cell_'+emp_arry[t]).val() == ''){
+					emptyCell.push(emp_arry[t]);
+				}
+			}
+			
+		}
+		console.log(emptyCell);
 		//console.log(Math.floor(Math.random() * emptyCell.length));
 		var rand = emptyCell[Math.floor(Math.random() * emptyCell.length)];
 		$('.cell_'+rand).html('2');
@@ -611,6 +653,7 @@ $(document).ready(function(){
 				success:function(response){
 					if(response == 1){
 						location.reload();
+						$('#submit').modal('hide');	
 					}
 				}
 			});
@@ -625,6 +668,17 @@ $(document).ready(function(){
 			url: 'ajax/getTop.php',
 			success:function(response){
 				$('#top').html(response);
+			}
+		});
+	}
+	function logout(){
+		$.ajax({
+			type: 'POST',
+			url: 'ajax/logout.php',			
+			success:function(response){
+				if(response == '1'){
+					location.reload();
+				}
 			}
 		});
 	}

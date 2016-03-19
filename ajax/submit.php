@@ -3,6 +3,7 @@
 	include('../config/db_config.php');
 	
 	$val =  $_POST['mailid'];
+	$name =  $_POST['name'];
 	$score =  $_POST['score'];
 	
 	$query = "SELECT * FROM `users` WHERE `mailid` = '$val' ";	
@@ -12,7 +13,7 @@
 
 	if(count($row) > 1){
 		if( $row['score'] < $score){
-			mysql_query("UPDATE `users` SET `score` = '$score' WHERE `mailid` = '$val'");			
+			mysql_query("UPDATE `users` SET `name` = '$name', `score` = '$score' WHERE `mailid` = '$val'");			
 			$_SESSION['score'] = $score;
 		}else{
 			$_SESSION['score'] = $row['score'];
@@ -24,7 +25,7 @@
 		$_SESSION['image'] = $row['image'];
 		
 	}else{
-		$result = mysql_query("INSERT INTO `users` (`mailid`,`score`) VALUES ('$val','$score')");
+		$result = mysql_query("INSERT INTO `users` (`name`,`mailid`,`score`) VALUES ('$name','$val','$score')");
 		$query2 = "SELECT * FROM `users` WHERE `mailid` = '$val' ";	
 		$result = mysql_query($query2);
 
