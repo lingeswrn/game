@@ -78,34 +78,37 @@
 			border: 2px rgb(238, 228, 218) solid;
 			padding: 11px;
 			border-radius: 9px;
+			margin-bottom: 10px;
 		}
 		.login{
 			border: 2px rgb(238, 228, 218) solid;
 			border-radius: 9px;
-			padding: 146px;
+			padding: 15px;
+			margin-bottom: 10px;
 		}
 	</style>
 </head>
 <body>	
 		<div class="col-md-12 col-xs-12 col-sm-12">
-			<div class="heading col-md-12 col-xs-12 col-sm-12">
+			<div class="heading col-md-12 col-xs-12 col-sm-12 text-center">
 				<h1 class="title">2048</h1>
 			</div>
 		</div>
-		<div class="col-md-5 col-xs-12 col-sm-6">
-			<?php if($_SESSION['score'] != ''){?>
-			<span>HIGH SCORE</span><br/>
-			<span id="high_score"><?php echo $_SESSION['score']; ?></span>
-			<?php } ?>
-		</div>
-		<div class="col-md-7 col-xs-12 col-sm-6">
-			<span class="text-right" style="float: right;">SCORE</span><br/>
-			<span class="text-right" id="score1" style="float: right;margin: 18px -61px;">0</span>
+		<div class="col-md-12 col-xs-12 col-sm-12 text-center">			
 			<button class="btn input-sm btn-color undo-comm"  onclick="undo()">UNDO</button>
-			<button class="btn input-sm btn-color undo-comm" onclick="reset()">RESET</button>			
+			<button class="btn input-sm btn-color undo-comm" onclick="reset()">RESET</button>	
+			<br/><br/>			
 		</div>
 		<div class="col-md-3 col-xs-12 col-sm-12 text-center">
-			<?php if($_SESSION['name']) { ?>
+
+		</div> 
+		<div class="col-md-6 col-xs-12 col-sm-12">
+			<div class="pull-left">
+				<?php if($_SESSION['score'] != ''){?>
+				<span>HIGH SCORE</span><br/>
+				<span id="high_score"><?php echo $_SESSION['score']; ?></span>
+				<?php } ?>
+				<?php if($_SESSION['name']) { ?>
 				<div class="profile">				
 					<h4>PROFILE</h4>
 					<hr/>
@@ -117,12 +120,22 @@
 					<button class="btn btn-danger btn-block input-sm" onclick="logout()">Logout</button>				
 				</div>
 			<?php }else{ ?>
-				<div class="login">
+				<div class="login text-center">
 					<button class="btn btn-color input-sm" onclick="submit_score()">Register/Login</button>
 				</div>
 			<?php } ?>
-		</div> 
-		<div class="col-md-6 col-xs-12 col-sm-12">
+			</div>
+			<div class="pull-right">
+				<div>
+					<span style="float: right;">SCORE</span><br/>
+					<span id="score1" style="float: right;margin: 18px -61px;">0</span>	
+				</div>
+				<div class="profile">
+					<h4 class="text-center">TOP 10 RANK</h4>
+					<hr/>				
+					<div id="top"></div>
+				</div>
+			</div>
 			<div class="gameover_dis">
 				<div class="gameover_pos">
 					<h4 class="title">GAME OVER</h4>
@@ -148,11 +161,7 @@
 			</div>
 		</div>
 		<div class="col-md-3 col-xs-12 col-sm-12">
-			<div class="profile">
-				<h4 class="text-center">TOP 10 RANK</h4>
-				<hr/>				
-				<div id="top"></div>
-			</div>
+			
 		</div>
 	
 	<!-- Submit Popup -->
@@ -475,7 +484,7 @@ $(document).ready(function(){
 				changeColor();
 			}else{
 				$('.gameover_pos').slideDown('slow');
-				$('table').addClass('opacity');
+				$('.gameover_dis').find('table').addClass('opacity');
 			}
 		
 	});
@@ -531,7 +540,7 @@ $(document).ready(function(){
 		var a = gameOver();
 		if(a == '111'){
 			$('.gameover_pos').slideDown('slow');
-			$('table').addClass('opacity');
+			$('.gameover_dis').find('table').addClass('opacity');
 		}
 	}
 	
@@ -595,6 +604,7 @@ $(document).ready(function(){
 		changeColor();
 		$('.gameover_dis').find('.gameover_pos').hide();		
 		$('.gameover_dis').find('table').removeClass('opacity');
+		$('table').removeClass('opacity');
 	}
 	
 	function reset(){		
@@ -609,6 +619,7 @@ $(document).ready(function(){
 		document.getElementById('score1').innerHTML = 0;
 		$('.gameover_dis').find('.gameover_pos').hide();		
 		$('.gameover_dis').find('table').removeClass('opacity');
+		$('table').removeClass('opacity');
 		$('.undo-comm').addClass('hide');
 	}
 	function gameOver(){

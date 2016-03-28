@@ -2,7 +2,9 @@
 	session_start();
 	include('../config/db_config.php');
 	
-	$query = "SELECT * FROM `users` order by score desc limit 10";	
+	$query = "SELECT * FROM `users`
+
+	order by score desc limit 10";	
 	$result = mysql_query($query);
 	$response = array();
 	$response['response'] = '';
